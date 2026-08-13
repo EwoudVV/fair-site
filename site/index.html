@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ellie Makes — Electronics Lessons for Kids</title>
+<meta name="description" content="Meet Ellie, a 15-year-old maker. Live robot demos, drawing machines, 3D printing, and hands-on electronics lessons for kids.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2314142b'/><text x='50' y='72' font-size='62' text-anchor='middle' fill='%23ffd166' font-family='system-ui' font-weight='bold'>E</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="logo" href="#top">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L20 7 V17 L12 22 L4 17 V7 Z"/><path d="M12 2 V22"/><path d="M4 7 L12 12 L20 7"/><path d="M12 12 L12 22"/></svg>
+      </span>
+      Ellie Makes
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#projects">Projects</a>
+      <a href="#lessons">Lessons</a>
+      <a href="#shop">Shop</a>
+      <a href="#signup" class="nav-cta">Sign up</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="hero-badge">
+          <span class="live-dot" aria-hidden="true"></span>
+          LIVE AT THE FAIR — see the drawing machine run!
+        </p>
+        <h1>Hi! I'm Ellie. I teach kids <span class="accent">electronics</span>.</h1>
+        <p class="hero-sub">
+          I'm 15 and I build robots, drawing machines, and software for fun.
+          At this booth: live demos, 3D prints you can buy, and hands-on
+          electronics lessons for kids.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#signup">Book a lesson</a>
+          <a class="btn btn-ghost" href="#donate">Support my projects</a>
+        </div>
+        <p class="hero-signups" id="counter-line">
+          <span id="counter" class="counter">0</span> families have signed up for lessons already
+        </p>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="machine" id="machine">
+          <div class="machine-frame">
+            <div class="gantry-x"><div class="gantry-y"><div class="pen"></div></div></div>
+          </div>
+          <div class="machine-draw" id="machineDraw"></div>
+          <div class="machine-label">drawbot-corexy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TICKER ============ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>DRAWING MACHINES</span><span>✦</span><span>ROBOTS</span><span>✦</span>
+      <span>3D PRINTING</span><span>✦</span><span>ELECTRONICS</span><span>✦</span>
+      <span>CODING</span><span>✦</span><span>HAM RADIO</span><span>✦</span>
+      <span>DRAWING MACHINES</span><span>✦</span><span>ROBOTS</span><span>✦</span>
+      <span>3D PRINTING</span><span>✦</span><span>ELECTRONICS</span><span>✦</span>
+      <span>CODING</span><span>✦</span><span>HAM RADIO</span><span>✦</span>
+    </div>
+  </div>
+
+  <!-- ============ PROJECTS ============ -->
+  <section class="section" id="projects">
+    <div class="container">
+      <p class="kicker">The stuff I built</p>
+      <h2 class="section-title">Projects on display</h2>
+
+      <div class="cards">
+
+        <article class="card card-feature">
+          <div class="card-top">
+            <span class="chip chip-live">● LIVE DEMO</span>
+            <h3>Drawbot</h3>
+          </div>
+          <p>
+            A half-meter-square drawing machine I designed from scratch to be
+            as fast and cheap as possible. CoreXY belts move the pen across the
+            paper while a scotch-yoke mechanism lifts it between strokes.
+            Watch it draw live at the booth.
+          </p>
+          <ul class="facts">
+            <li>0.5 m × 0.5 m drawing area</li>
+            <li>CoreXY belt design, NEMA17 steppers</li>
+            <li>Arduino Uno brain, custom code</li>
+            <li>Built for Hack Club Highway</li>
+          </ul>
+          <div class="tech">
+            <span class="tag">Arduino</span><span class="tag">CoreXY</span>
+            <span class="tag">Steppers</span><span class="tag">Custom code</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="chip">ROBOT</span>
+            <h3>Tarmo5</h3>
+          </div>
+          <p>
+            A fully 3D-printed, open-source robot car. I printed the chassis,
+            wired the electronics, and got it driving — then made it mine.
+            It's the project that turned me into a maker.
+          </p>
+          <ul class="facts">
+            <li>Entirely 3D-printed frame</li>
+            <li>Custom electronics + remote control</li>
+            <li>Open-source build (Building Tarmo)</li>
+          </ul>
+          <div class="tech">
+            <span class="tag">3D printing</span><span class="tag">RC</span>
+            <span class="tag">Electronics</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="chip">MAKER RADIO</span>
+            <h3>Foxhunt</h3>
+          </div>
+          <p>
+            Spy-gadget hide and seek. Hide the "fox" beacon somewhere in the
+            house, then walk around with the hunter — it beeps faster and
+            flashes RSSI on an OLED screen as you get closer. Real amateur
+            radio fox hunting, on cheap 2.4&nbsp;GHz modules.
+          </p>
+          <ul class="facts">
+            <li>ESP32 + nRF24L01+ radio link</li>
+            <li>OLED signal-strength display</li>
+            <li>Beeps faster the closer you get</li>
+          </ul>
+          <div class="tech">
+            <span class="tag">ESP32</span><span class="tag">nRF24L01+</span>
+            <span class="tag">OLED</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="chip">FROM SCRATCH</span>
+            <h3>Graphing Calculator OS</h3>
+          </div>
+          <p>
+            An operating system I wrote from scratch — no Linux, no Windows,
+            just hardware. Type an equation and it boots straight into a
+            graphing calculator with animated plotting and implicit curves.
+          </p>
+          <ul class="facts">
+            <li>Handles keyboard, mouse, and plotting</li>
+            <li>Up to 6 equations at once, color coded</li>
+            <li>Supports implicit equations (circles!)</li>
+          </ul>
+          <div class="tech">
+            <span class="tag">OS dev</span><span class="tag">C / asm</span>
+            <span class="tag">Math</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LESSONS ============ -->
+  <section class="section section-tint" id="lessons">
+    <div class="container">
+      <p class="kicker">My main thing</p>
+      <h2 class="section-title">Electronics lessons for kids</h2>
+      <p class="section-sub">
+        Taught by a kid who loves this stuff. Small groups, hands-on, and
+        everyone takes home something they built. Ages 8–14 — no experience
+        needed.
+      </p>
+
+      <div class="plans">
+        <article class="plan">
+          <h3>Taster</h3>
+          <p class="plan-price">$10</p>
+          <p class="plan-desc">One hour. Build a blinking LED circuit and take it home.</p>
+          <ul>
+            <li>Learn what a circuit is</li>
+            <li>Solder your first joint</li>
+            <li>Take-home blinking badge</li>
+          </ul>
+          <a class="btn btn-primary" href="#signup">Interested</a>
+        </article>
+
+        <article class="plan plan-pop">
+          <p class="plan-badge">MOST POPULAR</p>
+          <h3>Maker Workshop</h3>
+          <p class="plan-price">$35</p>
+          <p class="plan-desc">Four weekly sessions. From circuits to your own Arduino project.</p>
+          <ul>
+            <li>Circuits, sensors, and soldering</li>
+            <li>Program an Arduino (no prior coding needed)</li>
+            <li>Build a final project of your choice</li>
+            <li>All parts included</li>
+          </ul>
+          <a class="btn btn-primary" href="#signup">Sign up</a>
+        </article>
+
+        <article class="plan">
+          <h3>1-on-1</h3>
+          <p class="plan-price">Ask at the booth</p>
+          <p class="plan-desc">Private sessions on whatever your kid is curious about.</p>
+          <ul>
+            <li>Pick your own project</li>
+            <li>Robots, drawing machines, 3D printing</li>
+            <li>Flexible timing</li>
+          </ul>
+          <a class="btn btn-primary" href="#signup">Interested</a>
+        </article>
+      </div>
+
+      <p class="fineprint">
+        Prices listed for the fair. Group discounts for two+ siblings.
+        Parents are welcome to sit in. Questions? Ask at the booth!
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SHOP ============ -->
+  <section class="section" id="shop">
+    <div class="container">
+      <p class="kicker">Made here, printed here</p>
+      <h2 class="section-title">3D-printed goodies</h2>
+      <p class="section-sub">
+        Every print is designed and made on my own printer. Great stocking
+        stuffers, desk pets, and "I made that" gifts.
+      </p>
+
+      <div class="shop-grid">
+        <div class="shop-item">
+          <div class="shop-art art-print" aria-hidden="true"></div>
+          <h3>Keychains</h3>
+          <p>Rockets, gears, foxes — pick your design.</p>
+          <p class="shop-price">$2</p>
+        </div>
+        <div class="shop-item">
+          <div class="shop-art art-stand" aria-hidden="true"></div>
+          <h3>Phone stands</h3>
+          <p>Strong enough for a tablet. Custom colors.</p>
+          <p class="shop-price">$5</p>
+        </div>
+        <div class="shop-item">
+          <div class="shop-art art-planter" aria-hidden="true"></div>
+          <h3>Mini planters</h3>
+          <p>Cute desktop planters that actually hold plants.</p>
+          <p class="shop-price">$4</p>
+        </div>
+        <div class="shop-item">
+          <div class="shop-art art-custom" aria-hidden="true"></div>
+          <h3>Custom prints</h3>
+          <p>Bring a file or an idea — I'll print it for you.</p>
+          <p class="shop-price">from $6</p>
+        </div>
+      </div>
+
+      <p class="fineprint">Cash only at the booth. Everything printed in front of you.</p>
+    </div>
+  </section>
+
+  <!-- ============ SIGN UP ============ -->
+  <section class="section section-tint" id="signup">
+    <div class="container narrow">
+      <p class="kicker">The part that matters</p>
+      <h2 class="section-title">Tell me what you want to learn</h2>
+      <p class="section-sub">
+        Leave your details and I'll text or call you back after the fair.
+        Takes 20 seconds — and if you're here with your kid, just point at the
+        thing they liked and I'll find a class for it.
+      </p>
+
+      <form id="signup-form" class="form" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required placeholder="Jordan Smith">
+          </div>
+          <div class="field">
+            <label for="kid_age">Kid's age <span class="opt">(optional)</span></label>
+            <input id="kid_age" name="kid_age" type="number" min="1" max="18" placeholder="9">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555">
+          </div>
+        </div>
+
+        <fieldset class="field">
+          <legend>What sounds fun? <span class="opt">(pick any)</span></legend>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="topics" value="Circuits & soldering"><span>Circuits &amp; soldering</span></label>
+            <label class="check"><input type="checkbox" name="topics" value="Arduino"><span>Arduino programming</span></label>
+            <label class="check"><input type="checkbox" name="topics" value="Robots"><span>Robots (Tarmo!)</span></label>
+            <label class="check"><input type="checkbox" name="topics" value="Drawing machines"><span>Drawing machines</span></label>
+            <label class="check"><input type="checkbox" name="topics" value="3D printing"><span>3D printing</span></label>
+            <label class="check"><input type="checkbox" name="topics" value="Coding"><span>Coding &amp; video games</span></label>
+            <label class="check"><input type="checkbox" name="topics" value="Not sure"><span>Not sure yet — surprise us</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="message">Anything else? <span class="opt">(optional)</span></label>
+          <textarea id="message" name="message" rows="3" placeholder="My daughter loved the drawing machine…"></textarea>
+        </div>
+
+        <div class="field honeypot" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-big" id="submit-btn">Count me in</button>
+        <p class="form-status" id="form-status" role="status"></p>
+      </form>
+
+      <p class="fineprint form-alt">
+        Form acting up? It still saves your spot and I'll reach out — or just grab me at the booth.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ DONATE ============ -->
+  <section class="section" id="donate">
+    <div class="container narrow donate-box">
+      <p class="kicker">Pay it forward</p>
+      <h2 class="section-title">Support my projects</h2>
+      <p class="section-sub">
+        Every project I make starts with parts: stepper motors, filament,
+        sensors, and the occasional fried chip. Donations go straight into
+        the next build — and the next lesson for someone else.
+      </p>
+      <a class="btn btn-donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ilse.vanhevel%40gmail.com&currency_code=USD&item_name=Support%20Ellie's%20projects" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7.5 21.5h3l.8-4h2.4c2.9 0 5-2 5.5-4.9.4-2.4-.7-4.5-3-4.9L14.9 7H6.5L4.5 21.5h3z"/></svg>
+        Donate with PayPal
+      </a>
+      <p class="fineprint">Payments go through my mom's PayPal (I'm 15). Thank you so much — every chip counts!</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p><strong>Ellie Makes</strong> · 15 years old · Hack Clubber · builder of machines</p>
+    <p class="footer-note">Site served live from my Hack Club Nest box. Made for the school fair — <a href="mailto:ellie@example.com">say hi</a>.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
