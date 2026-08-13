@@ -1,0 +1,16 @@
+[Unit]
+Description=Cloudflare quick tunnel for fair site
+After=fair-web.service
+Requires=fair-web.service
+
+[Service]
+Type=simple
+ExecStart=/opt/fair/start-tunnel.sh
+WorkingDirectory=/opt/fair
+# No auto-restart on purpose: a restart changes the tunnel URL, which
+# would break the printed QR code. Restart manually if it ever dies:
+#   ssh duck@hackclub.app /opt/fair/start-tunnel.sh
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

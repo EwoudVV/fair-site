@@ -1,0 +1,13 @@
+[Unit]
+Description=Ellie Makes fair site backend
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/fair/server.py
+WorkingDirectory=/opt/fair
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
