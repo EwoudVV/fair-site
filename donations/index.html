@@ -37,11 +37,25 @@
         sensors, and the occasional fried chip. Donations go straight into
         the next build — and the next lesson for someone else.
       </p>
-      <a class="btn btn-donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ilse.vanhevel%40gmail.com&currency_code=USD&item_name=Support%20Ewoud%27s%20projects" target="_blank" rel="noopener">
+      <div class="amounts" id="amounts" role="group" aria-label="Choose an amount">
+        <button type="button" class="amount" data-amount="5">$5</button>
+        <button type="button" class="amount" data-amount="10">$10</button>
+        <button type="button" class="amount selected" data-amount="20">$20</button>
+        <label class="amount amount-custom">
+          <span class="dollar">$</span>
+          <input type="number" id="custom-amount" min="1" max="500" step="0.01"
+                 inputmode="decimal" placeholder="Custom" aria-label="Custom amount">
+        </label>
+      </div>
+      <button type="button" class="btn btn-donate btn-donate-big" id="donate-btn">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7.5 21.5h3l.8-4h2.4c2.9 0 5-2 5.5-4.9.4-2.4-.7-4.5-3-4.9L14.9 7H6.5L4.5 21.5h3z"/></svg>
-        Donate with PayPal
-      </a>
-      <p class="fineprint">Payments go through my mom's PayPal (I'm 15). Thank you so much — every chip counts!</p>
+        Donate $20 with card
+      </button>
+      <p class="fineprint" id="donate-hint">
+        Opens a secure PayPal checkout — pay with any card, no PayPal account
+        needed. Payments run through my mom's account (I'm 15). Thank you so
+        much — every chip counts!
+      </p>
     </div>
   </section>
 
@@ -88,6 +102,71 @@
     <p class="footer-note">Site served from my Hack Club nest box and GitHub Pages. <a href="../">Back to the main site</a></p>
   </div>
 </footer>
+
+<script>
+(function () {
+  "use strict";
+  var btn = document.getElementById("donate-btn");
+  var custom = document.getElementById("custom-amount");
+  var hint = document.getElementById("donate-hint");
+  var presetBtns = document.querySelectorAll(".amount[data-amount]");
+  var selected = null; // null = custom amount
+
+  function paypalUrl(amount) {
+    return "https://www.paypal.com/cgi-bin/webscr?cmd=_donations" +
+      "&business=ilse.vanhevel%40gmail.com" +
+      "&currency_code=USD" +
+      "&item_name=Support%20Ewoud%27s%20projects" +
+      "&amount=" + encodeURIComponent(amount);
+  }
+
+  function pickPreset(amount) {
+    selected = amount;
+    btn.textContent = "Donate $" + amount + " with card";
+    btn.disabled = false;
+    hint.textContent = "Opens a secure PayPal checkout with $" + amount +
+      " pre-filled — pay with any card, no PayPal account needed.";
+    presetBtns.forEach(function (b) {
+      b.classList.toggle("selected", b.dataset.amount === String(amount));
+    });
+    custom.value = "";
+  }
+
+  presetBtns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      pickPreset(parseInt(b.dataset.amount, 10));
+    });
+  });
+
+  custom.addEventListener("input", function () {
+    var v = parseFloat(custom.value);
+    presetBtns.forEach(function (b) { b.classList.remove("selected"); });
+    if (!isNaN(v) && v >= 1 && v <= 500) {
+      selected = null;
+      btn.textContent = "Donate $" + v.toFixed(2) + " with card";
+      btn.disabled = false;
+      hint.textContent = "Opens a secure PayPal checkout with $" + v.toFixed(2) +
+        " pre-filled — pay with any card, no PayPal account needed.";
+    } else {
+      btn.disabled = true;
+      hint.textContent = "Custom amounts between $1 and $500.";
+    }
+  });
+
+  btn.addEventListener("click", function () {
+    var amount;
+    if (selected) {
+      amount = parseFloat(selected);
+    } else {
+      amount = parseFloat(custom.value);
+    }
+    if (!amount || amount < 1 || amount > 500) return;
+    window.location.href = paypalUrl(amount.toFixed(2));
+  });
+
+  pickPreset(20);
+})();
+</script>
 
 </body>
 </html>
