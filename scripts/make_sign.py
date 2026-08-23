@@ -58,6 +58,7 @@ def main():
         <div class="btns">
           <a class="btn primary" href="{url}">Open website</a>
           <a class="btn dark" href="{url}#signup">Book a lesson</a>
+          <a class="btn" href="{url}donations/">Donate</a>
         </div>
         <p class="url">{url}</p>
       </div>

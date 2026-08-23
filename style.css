@@ -472,6 +472,13 @@ a { color: var(--blue-deep); }
 .donate-box .section-sub { margin-bottom: 1.2rem; }
 .donate-box .fineprint { max-width: 34em; }
 
+/* ---------- donations page ---------- */
+.donation-list { display: grid; grid-template-columns: 1fr; gap: 1.1rem; margin-bottom: 1.6rem; }
+@media (min-width: 640px) { .donation-list { grid-template-columns: repeat(2, 1fr); } }
+.donation-item { background: #fff; border: 2px solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1.3rem; }
+.donation-item h3 { margin: 0 0 0.3rem; font-size: 1.05rem; }
+.donation-item p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+
 /* ---------- footer ---------- */
 .site-footer { background: var(--ink); color: #b9b9cf; padding: 2rem 0; margin-top: 1rem; }
 .footer-inner { display: flex; flex-direction: column; gap: 0.3rem; text-align: center; }
