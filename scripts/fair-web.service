@@ -1,5 +1,5 @@
 [Unit]
-Description=Ellie Makes fair site backend
+Description=Ewoud Makes fair site backend
 After=network.target
 
 [Service]

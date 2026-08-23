@@ -1,4 +1,4 @@
-/* Ellie Makes — fair site
+/* Ewoud Makes — fair site
    No dependencies. Served statically (GitHub Pages); sign-ups go to the nest
    box backend via FAIR_API (see config.js). If the backend is unreachable,
    submissions are queued in localStorage and retried — nothing is lost. */
@@ -8,7 +8,7 @@
 
   /* config.js defines FAIR_API and FAIR_CONTACT */
   var API = window.FAIR_API || "";
-  var CONTACT = window.FAIR_CONTACT || "ellie@example.com";
+  var CONTACT = window.FAIR_CONTACT || "your-email@example.com";
   var QUEUE_KEY = "fair_queue";
 
   /* ---------- signup counter ---------- */

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ellie Makes fair site backend.
+"""Ewoud Makes fair site backend.
 
 Serves the static site and stores sign-ups as JSONL.
 Runs on the Hack Club nest box (port 80, root). Standard library only.
@@ -90,7 +90,7 @@ def save_signup(record):
 
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
-    server_version = "EllieMakes/1.0"
+    server_version = "EwoudMakes/1.0"
 
     def log_message(self, fmt, *args):
         sys.stderr.write("[%s] %s\n" % (time.strftime("%H:%M:%S"), fmt % args))

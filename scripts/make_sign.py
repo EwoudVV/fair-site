@@ -30,7 +30,7 @@ def main():
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Scan me — Ellie Makes</title>
+<title>Scan me — Ewoud Makes</title>
 <style>
   @page {{ size: letter portrait; margin: 0; }}
   body {{ margin: 0; font-family: -apple-system, system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; background: #14142b; }}
@@ -50,7 +50,7 @@ def main():
 </head>
 <body>
   <div class="sign">
-    <div class="head">ELLIE MAKES · scan me at the fair</div>
+    <div class="head">EWOUD MAKES · scan me at the fair</div>
     <div class="body">
       <div>
         <h1>Robots, drawing machines &amp; electronics lessons</h1>
@@ -63,7 +63,7 @@ def main():
       </div>
       <div class="qr"><img src="data:image/bmp;base64,{b64}" alt="QR code"></div>
     </div>
-    <div class="foot">Questions? Ask Ellie at the booth. Every scan helps — thank you!</div>
+    <div class="foot">Questions? Ask Ewoud at the booth. Every scan helps — thank you!</div>
   </div>
 </body>
 </html>

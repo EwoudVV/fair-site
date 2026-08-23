@@ -1,7 +1,7 @@
 #!/bin/bash
 # Starts the Cloudflare quick tunnel for the fair site, captures the URL,
 # and regenerates the QR code. If the tunnel dies, run this again and
-# print the new QR (/opt/fair/qr.png or /opt/fair/table-sign.html).
+# print the new QR (/opt/fair/tunnel-qr.png or /opt/fair/table-sign.html).
 set -e
 
 FAIR=/opt/fair
@@ -36,12 +36,12 @@ if [ -z "$URL" ]; then
 fi
 
 echo "$URL" > "$URLFILE"
-python3 "$FAIR/make_qr.py" "$URL" "$FAIR/qr.png"
+python3 "$FAIR/make_qr.py" "$URL" "$FAIR/tunnel-qr.png"
 python3 "$FAIR/make_sign.py" "$URL" "$FAIR/table-sign.html"
 
 echo "=============================================="
 echo "TUNNEL URL : $URL"
-echo "QR code    : $FAIR/qr.png"
+echo "QR code    : $FAIR/tunnel-qr.png"
 echo "Print sign : $FAIR/table-sign.html  (open in browser, print)"
 echo "=============================================="
 
