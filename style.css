@@ -473,7 +473,31 @@ a { color: var(--blue-deep); }
 .donate-box .fineprint { max-width: 34em; }
 
 /* ---------- donations page ---------- */
-.amounts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; width: 100%; margin: 0.4rem 0 1rem; }
+.checkout {
+  width: 100%;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.3rem;
+  display: grid;
+  gap: 0.9rem;
+  margin: 0.4rem 0 0.9rem;
+  text-align: left;
+}
+.checkout-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0.2rem 0 0;
+}
+.card-fields { display: grid; gap: 0.9rem; }
+.card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.checkout-demo { justify-self: center; margin-top: 0.2rem; }
+.amounts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; width: 100%; }
 @media (min-width: 480px) { .amounts { grid-template-columns: repeat(4, 1fr); } }
 .amount {
   font-family: var(--font);
