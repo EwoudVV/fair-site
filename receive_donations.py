@@ -20,7 +20,7 @@ LOCAL_DIR = Path.home() / "fair-donations"
 LOCAL_DIR.mkdir(exist_ok=True)
 LOCAL_ARCHIVE = LOCAL_DIR / "donations.jsonl"
 
-NEST_HOST = ""          # e.g. "nest@192.168.x.x"
+NEST_HOST = "duck@hackclub.app"  # stable Hack Club nest relay
 NEST_PATH = "/opt/fair/data/donations.jsonl"
 
 
@@ -39,9 +39,11 @@ def main():
         sys.exit(1)
 
     print(f"Fetching donations from {args.host} ...")
-    r = ssh_run(args.host, ["cat", NEST_PATH])
+    r = ssh_run(args.host, ["cat", NEST_PATH], check=False)
     if r.returncode != 0:
         print("No access or file missing on Nest box (that's fine if empty).")
+        if r.stderr.strip():
+            print("  " + r.stderr.strip().splitlines()[-1])
         return
     lines = [ln for ln in r.stdout.splitlines() if ln.strip()]
     if not lines:
