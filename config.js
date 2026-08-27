@@ -1,6 +1,6 @@
 /* Fair site config.
-   FAIR_API points at the nest box backend (Cloudflare tunnel).
-   If the tunnel URL changes, update this file and repush — the QR/site never breaks,
-   only the signup form would go stale. See "check-url" instructions. */
-var FAIR_API = "https://drawn-opera-manor-outputs.trycloudflare.com/api";
-var FAIR_CONTACT = "your-email@example.com"; /* change to your real email */
+   FAIR_API points at the nest box backend via a permanent Tailscale Funnel
+   URL (fairbox.tailb423e5.ts.net). The URL is stable — no more rotating
+   Cloudflare quick tunnels. */
+var FAIR_API = "https://fairbox.tailb423e5.ts.net/api";
+var FAIR_CONTACT = "ewoud.vanvooren@gmail.com";
