@@ -197,8 +197,9 @@
 
     function onDone() { done(); }
 
-    if (API) {
-      fetch(API + "/donate", {
+    function submit(apiBase) {
+      if (!apiBase) { setTimeout(onDone, 600); return; }
+      fetch(apiBase + "/donate", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -206,9 +207,16 @@
       }).then(function (r) { return r.json(); })
         .then(onDone)
         .catch(onDone);
-    } else {
-      setTimeout(onDone, 600);
     }
+
+    // Always grab a fresh config (GitHub Pages caches it up to 10 min)
+    fetch("../config.js?v=" + Date.now())
+      .then(function (r) { return r.text(); })
+      .then(function (t) {
+        var m = t.match(/var FAIR_API = "([^"]+)"/);
+        submit(m ? m[1] : (API || ""));
+      })
+      .catch(function () { submit(API); });
   });
 
   pickPreset(20);

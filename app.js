@@ -67,6 +67,17 @@
     statusEl.className = "form-status" + (kind ? " " + kind : "");
   }
 
+  /* GitHub Pages caches config.js up to 10 min; grab a fresh copy on submit */
+  function freshApi(cb) {
+    fetch("config.js?v=" + Date.now())
+      .then(function (r) { return r.text(); })
+      .then(function (t) {
+        var m = t.match(/var FAIR_API = "([^"]+)"/);
+        cb(m ? m[1] : API);
+      })
+      .catch(function () { cb(API); });
+  }
+
   if (form) {
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
@@ -96,27 +107,32 @@
       submitBtn.textContent = "Sending…";
       setStatus("", "");
 
-      sendPayload(payload)
-        .then(function () {
-          form.dataset.sent = "1";
-          setStatus("Got it! I'll text or email you right after the fair. Thank you!", "ok");
-          submitBtn.textContent = "Done! Talk soon \u2764";
-          loadCounter();
-        })
-        .catch(function () {
-          // queue it locally, retry in the background, and give a fallback path
-          var q = readQueue();
-          q.push(payload);
-          writeQueue(q);
-          setStatus(
-            "The booth's connection hiccuped, but your spot is saved — I'll get back to you. " +
-            "If you'd rather, email " + CONTACT + ".",
-            "ok"
-          );
-          form.dataset.sent = "1";
-          submitBtn.textContent = "Done! Talk soon \u2764";
-          flushQueue();
-        });
+      freshApi(function (base) {
+        var prev = API;
+        API = base;
+        sendPayload(payload)
+          .then(function () {
+            form.dataset.sent = "1";
+            setStatus("Got it! I'll text or email you right after the fair. Thank you!", "ok");
+            submitBtn.textContent = "Done! Talk soon \u2764";
+            loadCounter();
+          })
+          .catch(function () {
+            API = prev;
+            // queue it locally, retry in the background, and give a fallback path
+            var q = readQueue();
+            q.push(payload);
+            writeQueue(q);
+            setStatus(
+              "The booth's connection hiccuped, but your spot is saved — I'll get back to you. " +
+              "If you'd rather, email " + CONTACT + ".",
+              "ok"
+            );
+            form.dataset.sent = "1";
+            submitBtn.textContent = "Done! Talk soon \u2764";
+            flushQueue();
+          });
+      });
     });
   }
 
