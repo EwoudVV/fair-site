@@ -30,7 +30,7 @@ def main():
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Scan me — Ewoud Makes</title>
+<title>Scan me — Ewoud's Maker Lab</title>
 <style>
   @page {{ size: letter portrait; margin: 0; }}
   body {{ margin: 0; font-family: -apple-system, system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; background: #14142b; }}
@@ -50,7 +50,7 @@ def main():
 </head>
 <body>
   <div class="sign">
-    <div class="head">EWOUD MAKES · scan me at the fair</div>
+    <div class="head">EWOUD'S MAKER LAB · scan me at the fair</div>
     <div class="body">
       <div>
         <h1>Robots, drawing machines &amp; electronics lessons</h1>
@@ -58,7 +58,7 @@ def main():
         <div class="btns">
           <a class="btn primary" href="{url}">Open website</a>
           <a class="btn dark" href="{url}#signup">Book a lesson</a>
-          <a class="btn" href="{url}donations/">Donate</a>
+          <a class="btn" href="{url}/donations/">Donate</a>
         </div>
         <p class="url">{url}</p>
       </div>

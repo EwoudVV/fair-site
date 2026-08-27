@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ewoud Makes fair site backend.
+"""Ewoud's Maker Lab fair site backend.
 
 Serves the static site and stores sign-ups as JSONL.
 Runs on the Hack Club nest box (port 80, root). Standard library only.
@@ -98,7 +98,7 @@ def save_donation(record):
 
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
-    server_version = "EwoudMakes/1.0"
+    server_version = "EwoudsMakerLab/1.0"
 
     def log_message(self, fmt, *args):
         sys.stderr.write("[%s] %s\n" % (time.strftime("%H:%M:%S"), fmt % args))

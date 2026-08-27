@@ -1,4 +1,4 @@
-/* Ewoud Makes — fair site
+/* Ewoud's Maker Lab — fair site
    No dependencies. Served statically (GitHub Pages); sign-ups go to the nest
    box backend via FAIR_API (see config.js). If the backend is unreachable,
    submissions are queued in localStorage and retried — nothing is lost. */
