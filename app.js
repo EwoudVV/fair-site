@@ -136,22 +136,6 @@
     });
   }
 
-  /* ---------- drawbot animation ---------- */
-  var gantryX = document.querySelector(".gantry-x");
-  var gantryY = document.querySelector(".gantry-y");
-  function animateDrawbot() {
-    if (!gantryX || !gantryY) return;
-    var t = 0;
-    setInterval(function () {
-      t += 1;
-      var x = 4 + 88 * (0.5 + 0.5 * Math.sin(t / 7));
-      var y = -14 + 24 * Math.sin(t / 5);
-      gantryX.style.transform = "translateX(" + x + "%)";
-      gantryY.style.transform = "translateY(" + y + "px)";
-    }, 900);
-  }
-  animateDrawbot();
-
   /* ---------- reveal on scroll ---------- */
   var revealEls = document.querySelectorAll(".card, .plan, .shop-item, .section-title");
   if ("IntersectionObserver" in window) {
